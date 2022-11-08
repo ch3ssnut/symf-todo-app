@@ -1,0 +1,73 @@
+@import "~bootstrap";
+
+/* BASE */
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+}
+
+@media only screen and (max-width: 880px) {
+    html {
+        font-size: 50%;
+    }
+}
+
+@media only screen and (max-width: 420px) {
+    html {
+        font-size: 32.5%;
+    }
+}
+
+body {
+    font-size: 2rem;
+    font-family: 'Lato', sans-serif;
+}
+
+/* NAVBAR */
+
+.nav {
+    background-color: #1F1D36;
+}
+
+/* TODO */
+
+.done-btn {
+    width: 33%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.todo {
+    background-color: royalblue;
+}
+
+
+/* FORM */
+
+.form {
+    font-size: 2.3rem;
+    width: 35%;
+    margin-top: 15rem;
+}
+
+.form-control {
+    font-size: 2rem;
+}
+
+.btn {
+    font-size: 2rem;
+}
+
+.error {
+    color: tomato;
+    font-size: 1.3rem;
+}

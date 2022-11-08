@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Todo App{% endblock %}
+
+
+{% block body %}
+    <div class="d-flex">
+        <nav class="sidebar bg-light p-4">
+            <div class="sidebar-header">
+                Categories
+            </div>
+            <div class="">
+                <div class="">
+                    <a href="{{ path('todos') }}" class="btn btn-outline-dark">Uncategorized</a>
+                </div>
+                {% for category in categories %}
+                    <div class="d-flex justify-content-between mt-3">
+                        <a href="{{ path('todos', {'id': category.id}) }}" class="btn btn-outline-dark">
+                            {{ category.name }}
+                        </a>
+                        <a href="{{ path('remove_category', {'id':category.id})}}" id="{{category.id}}" class="btn btn-outline-danger">Remove</a>
+                    </div>
+                {% endfor %}
+                <div class="py-4">
+                    {{ form_start(categoryForm, {'attr': {'class': 'py-5 px-4 border'}}) }}
+                        <div class="justify-content-center">
+                            {{ form_label(categoryForm.name, 'Add new category:', {'label_attr': {'class': 'my-2 form-label'}}) }}
+                            {{ form_widget(categoryForm.name, {'attr': {'class': 'my-2 form-control'}}) }}
+                        </div>
+                        <div class="justify-content-center">
+                            {{ form_widget(categoryForm.Submit, {'attr': {'class': 'mt-3 btn btn-primary'}})}}
+                        </div>
+                    {{ form_end(categoryForm) }}
+    </div>
+            </div>
+        </nav>
+    
+        <div class="mt-5 container align-content-between">
+            {% if todos %}
+                <div class="m-2 row todo">
+                    <div class="p-2 col-7 text-center">
+                        Task
+                    </div>
+                    <div class="p-2 col text-center">
+                        Deadline
+                    </div>
+                    <div class="p-2 col text-center">
+                        Delete
+                    </div>
+                    <div class="p-2 col text-center">
+                        Is Completed?
+                    </div>
+                </div>
+                {% for todo in todos %}
+                    <div class="d-flex m-2 row todo">
+                        <div class="d-flex centr-flex col-7">
+                            <div class="align-self-center">
+                                {{todo.name}}
+                            </div>
+                        </div>
+                        <div class="d-flex centr-flex p-2 col justify-content-center">
+                            <div class="align-self-center">
+                                {{ todo.deadline ? todo.deadline|date("d/m/Y") : '' }}
+                            </div>
+                        </div>
+                        <div class="p-2 col text-center">
+                            <a class="btn btn-light btn-block" href="{{ path('remove', {'id':todo.id})}}" id="{{ todo.id }}">Delete</a>
+                        </div>
+                        <div class="p-2 col text-center">
+                            <div class="done-btn">
+                                <a 
+                                    href="{{ path('edit', {'id': todo.id})}}" 
+                                    id="{{ todo.id }}"
+                                    style="{{ todo.isDone ? 'color:green' : 'color:red' }}"
+                                    class="btn btn-light w-100"
+                                >
+                                {{ todo.isDone ? 'Yes' : 'No' }}
+                                </a>    
+                            </div>
+                        </div>
+                        
+                    </div>
+                {% endfor %}
+                
+            {% else %}
+                <p>No todos available</p>
+            {% endif %}
+            <div class="row m-2">
+                {{ form_start(form, {'attr': {'class': 'py-5 px-4 border col-3'}}) }}
+                    <div class="justify-content-center">
+                        {{ form_label(form.name, 'Add new task:', {'label_attr': {'class': 'my-2 form-label'}}) }}
+                        {{ form_widget(form.name, {'attr': {'class': 'my-2 form-control'}}) }}
+                    </div>
+                    <div class="">
+                        {{ form_label(form.deadline, 'Deadline: ', {'label_attr': {'class': 'my-2 form-label'}}) }}
+                        {{ form_widget(form.deadline, {'attr': {'class': 'my-2 form-control'}}) }}
+                    </div>
+                    <div class="">
+                        {{ form_label(form.category, 'Category: ', {'label_attr': {'class': 'my-2 form-label'}}) }}
+                        {{ form_widget(form.category, {'attr': {'class': 'my-2 form-control'}}) }}
+                    </div>
+                    <div class="justify-content-center">
+                        {{ form_widget(form.Submit, {'attr': {'class': 'mt-3 btn btn-primary'}})}}
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

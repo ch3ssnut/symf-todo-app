@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {# Run `composer require symfony/webpack-encore-bundle`
+           and uncomment the following Encore helpers to start using Symfony UX #}
+        {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+        {# <link rel="stylesheet" href="css/app.css"> #}
+        {% endblock %}
+
+        {% block javascripts %}
+            {# {{ encore_entry_script_tags('app') }} #}
+        {% endblock %}
+    </head>
+    <body>
+    <header>
+        {% set page = app.request.attributes.get('_route') %}
+        <ul class="nav nav-pills justify-content-end nav__color">
+            <li class="nav-item">
+                <a class="nav-link {% if page == 'homepage' %}active{% endif %}" href="{{ path('homepage') }}">Homepage</a>
+            </li>
+
+            {% if not app.user %}
+                <li class="nav-item">
+                    <a class="nav-link {% if page == 'app_login' %}active{% endif %}" href="{{ path('app_login') }}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if page == 'app_register' %}active{% endif %}" href="{{ path('app_register') }}">Register</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                <a class="nav-link {% if page == 'todos' %}active{% endif %}" href="{{ path('todos') }}">Todos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+                </li>
+            {% endif %}
+
+
+
+        </nav>
+    </header>
+        {% block body %}
+            {% include("todo/_navbar.html.twig") %}
+        {% endblock %}
+    </body>
+</html>
